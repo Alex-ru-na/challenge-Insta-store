@@ -7,8 +7,13 @@ import morgan from "morgan";
 import cors from "cors";
 import { firstValueFrom } from 'rxjs'
 import MongoConnection from "../../../common/config/configMongoConnection";
-import storesRoutes from "../../stores/apiStores.routes";
 import { ParalellQueueAdapter } from '../../../common/adapters/paralellQueueAdapter'
+
+
+//routes
+import storesRoutes from "../../stores/stores.routes";
+import authRoutes from "../../auth/auth.routes";
+
 
 export default class Server {
   static readonly DEFAULT_PORT = 3001;
@@ -18,6 +23,7 @@ export default class Server {
   private port: number;
   private apiPath = {
     stores: "/api/v1/stores",
+    auth: "/api/v1/auth",
   };
 
   private constructor() {
@@ -81,6 +87,7 @@ export default class Server {
 
   private routes(): void {
     this.app.use(this.apiPath.stores, storesRoutes);
+    this.app.use(this.apiPath.auth, authRoutes);
   }
 
   public listen(): void {

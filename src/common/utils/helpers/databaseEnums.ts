@@ -4,4 +4,5 @@ export enum DataBase {
 
 export const Collections = {
   store: "stores",
+  client: "clients",
 };

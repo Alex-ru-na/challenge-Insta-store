@@ -1,5 +1,7 @@
 export interface Client {
     _id: string;
+    email: string;
+    hash?: string;
     name: string;
     timezone: string;
     location: {

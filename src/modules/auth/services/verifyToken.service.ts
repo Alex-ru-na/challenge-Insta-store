@@ -5,7 +5,7 @@ import path from "path";
 export class VerifyTokenService {
   static readonly TOKEN_ALGORITHM = "RS256"
   private readonly PUBLIC_KEY = fs.readFileSync(
-    path.basename("./jwtPublicRS256.key"),
+    path.basename("../../../../jwtRS256.pub"),
     "utf8"
   );
 

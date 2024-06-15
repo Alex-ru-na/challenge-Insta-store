@@ -1,18 +1,17 @@
 import { NextFunction, Request, Response } from "express";
-import { VerifyTokenService } from '../services/verifyToken.service';
+import { VerifyTokenService } from '../../modules/auth/services/verifyToken.service';
 
 function extractTokenFromBearerToken(bearerToken: string): string {
-  const bearerTokenSplited = bearerToken.split(" ");
-  const [ bearerPart, token ] = bearerTokenSplited;
+  const bearerTokenSplit = bearerToken.split(" ");
+  const [ bearerPart, token ] = bearerTokenSplit;
   const isBearerPartInvalid = bearerPart.toLocaleLowerCase() !== "bearer";
   if (isBearerPartInvalid || !token) {
     throw new Error("Invalid token");
   }
-
   return token;
 }
 
-export async function validateAuth(req: Request, res: Response, next: NextFunction) {
+export async function authToken(req: Request, res: Response, next: NextFunction) {
   try {
     const bearerToken: string | undefined = req.headers.authorization;
     if (!bearerToken) {

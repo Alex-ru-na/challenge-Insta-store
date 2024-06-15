@@ -1,8 +1,8 @@
 import { DataBase, Collections } from "../../../common/utils/helpers/databaseEnums";
 import MongoConnection from '../../../common/config/configMongoConnection';
-import { Store, StoreAggregate } from "../models/store.interface";
+import { StoreAggregate } from "../models/store.interface";
 import moment from "moment-timezone";
-import { Client } from "../models/client.interfaces";
+import { Client } from "../../../common/interfaces/client.interfaces";
 
 export class DaoStoresRepository {
   private clientMongoConnectionRead = MongoConnection.getInstance().getClientRead();

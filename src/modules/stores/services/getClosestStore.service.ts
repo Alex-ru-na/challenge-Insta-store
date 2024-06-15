@@ -6,7 +6,7 @@ import { DaoStoresRepository } from "../repository/daoStoresRepository";
 
 // schemas y models
 import { clientSchema } from "../schemas/client.schema";
-import { Client } from "../models/client.interfaces";
+import { Client } from "../../../common/interfaces/client.interfaces";
 import { ResponseClosestStore, Store } from "../models/store.interface";
 
 

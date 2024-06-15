@@ -19,6 +19,15 @@ class ResponseExpress {
       return res.status(400).json({ ...errorMessage, details: data.getDetails() });
     }
 
+    if (data as any === "Unauthorized") {
+      return res.status(401).json({
+        error: "Usuario o contraseña erroneos",
+        name: "Unauthorized",
+        stack: undefined,
+        ok: false,
+      })
+    }
+
     return res.status(400).json(errorMessage);
   }
 
