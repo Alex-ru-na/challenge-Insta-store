@@ -8,7 +8,7 @@
     "serverless:dev": "cross-env NODE_ENV=development serverless offline --noTimeout --stage development",
     "serverless:prod": "cross-env NODE_ENV=production serverless offline --noTimeout --stage production",
     "test": "echo \"Error: [nota] coming soon\" && exit 1",
-    "start": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\"",
+    "start": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/src/app.js\"",
     "stage": "cross-env NODE_ENV=development tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\"",
     "prod": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"nodemon ./dist/app.js\"",
     "dev": "cross-env NODE_ENV=development tsc-watch --project . --outDir ./dist --onSuccess \"nodemon ./dist/app.js\"",
@@ -37,7 +37,9 @@
     "moment-timezone": "^0.5.43",
     "mongodb": "^6.1.0",
     "morgan": "^1.10.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -49,6 +51,8 @@
     "@types/jsonwebtoken": "^9.0.3",
     "@types/morgan": "^1.9.5",
     "@types/node": "^20.6.5",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "aws-sdk": "^2.1472.0",
     "cross-env": "^7.0.3",
     "serverless-dotenv-plugin": "^6.0.0",

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { GetClosestStoreService } from "./services/getClosestStore.service";
 import ResponseExpress from "../../common/adapters/responseExpressAdapter";
+import CustomError from "../../common/utils/errorCustom";
 
 class GetStoresController {
   public async getClosestStore(req: Request, res: Response) {

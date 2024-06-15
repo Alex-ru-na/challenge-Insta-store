@@ -3,6 +3,7 @@ import MongoConnection from '../../../common/config/configMongoConnection';
 import { StoreAggregate } from "../models/store.interface";
 import moment from "moment-timezone";
 import { Client } from "../../../common/interfaces/client.interfaces";
+const DEFAULT_TIME_ZONE = 'America/Bogota';
 
 export class DaoStoresRepository {
   private clientMongoConnectionRead = MongoConnection.getInstance().getClientRead();
@@ -24,11 +25,12 @@ export class DaoStoresRepository {
     }
   }
 
-  public async findClosestOpenStore(client: Client, limit: number = 1): Promise<StoreAggregate[]> {
+  public async findClosestOpenStore(client: Client, limit: number = 1): Promise<StoreAggregate> {
     try {
-      //const currentDay = moment().tz("America/Mexico_City").format('dddd').toLowerCase();
-      const currentDay = moment().tz(client.timezone).format('dddd').toLowerCase();
-      const currentTime = moment().tz(client.timezone).format('HH:mm');
+      const timezone = client.timezone || DEFAULT_TIME_ZONE;
+
+      const currentDay = moment().tz(timezone).format('dddd').toLowerCase();
+      const currentTime = moment().tz(timezone).format('HH:mm');
 
       const aggregation = [
         {
@@ -45,8 +47,8 @@ export class DaoStoresRepository {
           $addFields: {
             isOpenNow: {
               $and: [
-                { $gte: [`$openingHours.${currentDay}.open`, currentTime] },
-                { $lt: [currentTime, `$openingHours.${currentDay}.close`] }
+                { $gte: [`openingHours.${currentDay}.open`, currentTime] },
+                { $lt: [currentTime, `openingHours.${currentDay}.close`] }
               ]
             }
           }
@@ -67,7 +69,7 @@ export class DaoStoresRepository {
         .toArray()
         .then();
 
-      return stores as StoreAggregate[];
+      return stores?.[0] as any as StoreAggregate;
     } catch (error) {
       let _error = error as any;
       let message = _error?.message

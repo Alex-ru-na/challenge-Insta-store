@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { JoiValidationError } from "../utils/joi-error";
+import CustomError from "../utils/errorCustom";
 
 class ResponseExpress {
 
@@ -19,13 +20,9 @@ class ResponseExpress {
       return res.status(400).json({ ...errorMessage, details: data.getDetails() });
     }
 
-    if (data as any === "Unauthorized") {
-      return res.status(401).json({
-        error: "Usuario o contraseña erroneos",
-        name: "Unauthorized",
-        stack: undefined,
-        ok: false,
-      })
+    if (data instanceof CustomError) {
+      const { statusCode, errorCode } = data;
+      return res.status(statusCode).json({ ...errorMessage, });
     }
 
     return res.status(400).json(errorMessage);

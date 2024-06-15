@@ -9,6 +9,7 @@ import { comparePassword } from "../../../common/adapters/encrypting";
 
 import { Client } from "../../../common/interfaces/client.interfaces";
 import { DaoClientRepository } from "../../clients/repository/daoClient.repository";
+import CustomError from "../../../common/utils/errorCustom";
 
 // Configuraciones
 dotenvFlow.config({ silent: true });
@@ -24,10 +25,11 @@ export class LoginService {
 
   public async main(email: string, password: string) {
     const user = await this.clientRepository.getClient(email);
-    if(!user) throw new Error('Unauthorized');
+
+    if(!user) throw new CustomError('Wrong username or password', 401, 'Unauthorized');
 
     const isEqual = await comparePassword(password, user.hash!);
-    if (!isEqual) throw new Error('Unauthorized');
+    if (!isEqual) throw new CustomError('Wrong username or password', 401, 'Unauthorized');
 
     const result = await this.getToken(user);
     return result;
@@ -53,7 +55,9 @@ export class LoginService {
     );
 
     return {
-      data: user.email,
+      user: {...user,
+        hash: undefined,
+      },
       token,
       msg: "token successfully obtained",
     };

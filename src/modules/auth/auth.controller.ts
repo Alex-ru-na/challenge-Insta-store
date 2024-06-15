@@ -24,7 +24,7 @@ class AuthController {
 
       return responseExpress.successResponse(res, result);
     } catch (error: any) {
-      return responseExpress.errorResponse(res, error.message);
+      return responseExpress.errorResponse(res, error);
     }
   }
 }

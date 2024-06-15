@@ -105,9 +105,6 @@ class MongoConnection {
   }
 
   private setUrlConnections(): void {
-    console.log({
-      READ: process.env.MONGO_URL_READ,
-    })
     this.WriteURLConnection = process.env.MONGO_URL_READ || "";
     this.ReadURLConnection = process.env.MONGO_URL_WRITE || "";
   }

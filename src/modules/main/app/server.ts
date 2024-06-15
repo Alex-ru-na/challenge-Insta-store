@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs'
 import MongoConnection from "../../../common/config/configMongoConnection";
 import { ParalellQueueAdapter } from '../../../common/adapters/paralellQueueAdapter'
 
+import setupSwagger from '../../../common/config/swaggerConfig';
 
 //routes
 import storesRoutes from "../../stores/stores.routes";
@@ -78,10 +79,11 @@ export default class Server {
   }
 
   private middlewares(): void {
+    setupSwagger(this.app);
     this.app.use(cors());
     this.app.use(helmet());
     this.app.use(morgan("dev"));
-    this.app.use(express.json({limit: "50mb"}));
+    this.app.use(express.json({ limit: "50mb" }));
     this.app.get('/', (req, res) => res.status(200).json({ ok: true }));
   }
 
@@ -92,7 +94,8 @@ export default class Server {
 
   public listen(): void {
     this.app.listen(this.port, () => {
-      console.log(`[Info] Servidor corriendo en el puerto: ${this.port}`);
+      console.log(`[Info] Server running at port: ${this.port}`);
+      console.log("[DOC] http://localhost:3000/api-docs/")
     })
   }
 }
