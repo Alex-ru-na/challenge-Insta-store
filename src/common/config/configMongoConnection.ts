@@ -1,9 +1,8 @@
-import { MongoClient, ObjectId } from "mongodb";
-import { Subject, Observable } from "rxjs";
 import dotenvFlow from "dotenv-flow";
+import { MongoClient, ObjectId } from "mongodb";
+import { Observable, Subject } from "rxjs";
 
-dotenvFlow.config({silent: true });
-
+dotenvFlow.config({ silent: true });
 
 class MongoConnection {
   public static instance: MongoConnection;
@@ -12,7 +11,6 @@ class MongoConnection {
   private ReadURLConnection!: string;
   public clientWrite!: MongoClient;
   public clientRead!: MongoClient;
-
 
   private _statusReadConnection = new Subject<boolean>();
   private _statusWriteConnection = new Subject<boolean>();
@@ -52,9 +50,7 @@ class MongoConnection {
 
   public async connectionsWrite(): Promise<void> {
     try {
-      this.clientWrite = await MongoClient.connect(
-        this.WriteURLConnection,
-      );
+      this.clientWrite = await MongoClient.connect(this.WriteURLConnection);
       if (this.clientWrite) {
         console.log("[Info] DB Write online");
       }
@@ -69,9 +65,7 @@ class MongoConnection {
 
   public async connectionsRead(): Promise<void> {
     try {
-      this.clientRead = await MongoClient.connect(
-        this.ReadURLConnection
-      );
+      this.clientRead = await MongoClient.connect(this.ReadURLConnection);
       if (this.clientRead) {
         console.log("[Info] DB Read online");
       }
@@ -105,6 +99,9 @@ class MongoConnection {
   }
 
   private setUrlConnections(): void {
+    console.log({
+      READ: process.env.MONGO_URL_READ,
+    });
     this.WriteURLConnection = process.env.MONGO_URL_READ || "";
     this.ReadURLConnection = process.env.MONGO_URL_WRITE || "";
   }

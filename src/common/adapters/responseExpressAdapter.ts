@@ -1,9 +1,7 @@
 import { Response } from "express";
 import { JoiValidationError } from "../utils/joi-error";
-import CustomError from "../utils/errorCustom";
 
 class ResponseExpress {
-
   successResponse(res: Response, data: any) {
     return res.status(200).json({ ...data, ok: true });
   }
@@ -17,12 +15,9 @@ class ResponseExpress {
     };
 
     if (data instanceof JoiValidationError) {
-      return res.status(400).json({ ...errorMessage, details: data.getDetails() });
-    }
-
-    if (data instanceof CustomError) {
-      const { statusCode, errorCode } = data;
-      return res.status(statusCode).json({ ...errorMessage, });
+      return res
+        .status(400)
+        .json({ ...errorMessage, details: data.getDetails() });
     }
 
     return res.status(400).json(errorMessage);
