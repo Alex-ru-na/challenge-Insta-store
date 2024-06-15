@@ -7,7 +7,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { firstValueFrom } from 'rxjs'
 import MongoConnection from "../../../common/config/configMongoConnection";
-import storesRoutes from "../../stores/infra/http/apiStores.routes";
+import storesRoutes from "../../stores/apiStores.routes";
 import { ParalellQueueAdapter } from '../../../common/adapters/paralellQueueAdapter'
 
 export default class Server {

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { VerifyTokenService } from '../domain/services/verifyToken.service';
+import { VerifyTokenService } from '../services/verifyToken.service';
 
 function extractTokenFromBearerToken(bearerToken: string): string {
   const bearerTokenSplited = bearerToken.split(" ");
