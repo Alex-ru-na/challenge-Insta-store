@@ -6,34 +6,20 @@ const authController = new AuthController();
 
 /**
  * @swagger
- * tags:
- *   name: Login
- *   description: Service for login and create token
- */
-
-/**
- * @swagger
  * /api/v1/auth/login:
  *   post:
  *     summary: User login
  *     tags: [Login]
  *     security:
  *       - basicAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *                 description: username
- *                 example: "test@gmail.com"
- *               password:
- *                 type: string
- *                 description: password
- *                 example: "123"
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Basic authentication (test@gmail.com, 123)
+ *         example:
  *     responses:
  *       200:
  *         description: Login success
@@ -117,6 +103,7 @@ const authController = new AuthController();
  *                   type: boolean
  *                   example: false
  */
+
 router.post("/login", [], authController.login);
 
 export default router;

@@ -19,12 +19,14 @@ const options = {
         basicAuth: {
           type: 'http',
           scheme: 'basic',
+          description: 'Basic authentication header',
         },
       },
     },
     security: [
       {
         bearerAuth: [],
+        basicAuth: [],
       },
     ],
   },
