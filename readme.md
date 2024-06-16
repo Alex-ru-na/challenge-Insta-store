@@ -1,9 +1,9 @@
-## challenge-Insta-store
+## Challenge-Insta-store
 Esta API contiene servicios para autenticación el cual permite a los usuarios iniciar sesión de forma segura utilizando Basic Auth. Tambien permite la busqueda de tiendas cercanas eficientemente mediante el uso de un índice 2dsphere en MongoDB el cual permite busquedas basadas en coordenadas geográficas.
 Adicional se almacena la consultas generadas a la funcionalidad de busqueda para llevar un registro.
 
 ### Mapa de las funcionalidades:
-http://localhost:3000/api-docs/
+Consultar despues de correr el proyecto:  http://localhost:3000/api-docs/
 
 ## Instalación
 
@@ -29,15 +29,15 @@ http://localhost:3000/api-docs/
     npm run build
     ```
 
-- Correr el proyecto de develop:
+- Correr el proyecto para develop:
     ```sh
     npm run dev
     ```
-- Correr el proyecto de local:
+- Correr el proyecto para local:
     ```sh
     npm run local
     ```
-- Correr el proyecto de produccion:
+- Correr el proyecto para produccion:
     ```sh
     npm run build
     npm run start
@@ -53,14 +53,14 @@ http://localhost:3000/api-docs/
     npm run test
     ```
 
-### Endpoints:
-#### ❤️✔️ Healh Check
+## Endpoints:
+### ❤️✔️ Healh Check
 ```js
 GET `http://localhost:${PORT}/`
 RESPONSE: { ok: true }
 ```
 
-#### 📦 Autenticación 🔐
+### 📦 Autenticación 🔐
 
 - **URL**: `/api/v1/auth/login`
 - **Método**: `POST`
@@ -70,7 +70,7 @@ RESPONSE: { ok: true }
   - `200`: Inicio de sesión exitoso.
   - `401`: No autorizado.
 
-##### Ejemplo de llamada al endpoint
+#### Ejemplo de llamada al endpoint
 
 ```js
 POST `http://localhost:${PORT}/api/v1/auth/login`
@@ -97,7 +97,7 @@ RESPONSE: {
 }
 ```
 
-### Ejemplo Login desde un framework frontend
+#### Ejemplo Login desde un framework frontend
 ```js
     const credentials = btoa(`${email}:${password}`);
     const response = await fetch('http://localhost:3001/api/v1/auth/login', {
@@ -108,7 +108,7 @@ RESPONSE: {
     });
 ```
 
-#### 📦 Para optener la tienda mas cercana
+####  Para optener la tienda mas cercana 📦
 
 - **URL**: `/api/v1/stores/get/closer`
 - **Método**: `POST`
@@ -157,5 +157,5 @@ Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 - Sube tus cambios a tu fork (git push origin feature/new-endpoint).
 - Genera un Pull Request, puedes nombras tus 2 remotos origin (tu fork) y upstream (original).
 
-### Fecha de estimacion de entrega 🗓
+## Fecha de estimacion de entrega 🗓
 3 días => 2024-06-17T13:00:00Z
