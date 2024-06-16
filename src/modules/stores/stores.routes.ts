@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authToken} from "../../common/middlewares/validateAuth";
-import GetStoresController from "./getStores.controller";
+import GetStoresController from "./stores.controller";
 
 const router = Router();
 const getStoresController = new GetStoresController();
