@@ -4,5 +4,6 @@ export enum DataBase {
 
 export const Collections = {
   store: "stores",
+  track: "search_store_tracks",
   client: "clients",
 };

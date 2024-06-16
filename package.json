@@ -7,11 +7,11 @@
     "build": "tsc --pretty",
     "test": "cross-env NODE_ENV=production jest",
     "test:watch": "jest --watchAll",
-    "start": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\"",
-    "stage": "cross-env NODE_ENV=development tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\"",
-    "prod": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\"",
-    "dev": "cross-env NODE_ENV=development tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\"",
-    "local": "cross-env NODE_ENV=local tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/app.js\""
+    "start": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/src/app.js\"",
+    "stage": "cross-env NODE_ENV=development tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/src/app.js\"",
+    "prod": "cross-env NODE_ENV=production tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/src/app.js\"",
+    "dev": "cross-env NODE_ENV=development tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/src/app.js\"",
+    "local": "cross-env NODE_ENV=local tsc-watch --project . --outDir ./dist --onSuccess \"node ./dist/src/app.js\""
   },
   "engines": {
     "npm": ">=9.0.0 <=9.6.7",

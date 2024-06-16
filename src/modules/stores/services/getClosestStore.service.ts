@@ -2,40 +2,55 @@
 import moment from "moment-timezone";
 
 // Schemas y models
-import { requestClosestStoreSchema  } from "../../stores/schemas/store.schema";
+import { requestClosestStoreSchema } from "../../stores/schemas/store.schema";
 import { Client } from "../../../common/interfaces/client.interfaces";
 import { RequestClosestStore, ResponseClosestStore, Store } from "../models/store.interface";
 
-import { DaoStoresRepository } from "../repository/daoStoresRepository";
-import CustomError from "../../../common/utils/errorCustom"
+// utils
+import CustomError from "../../../common/utils/errorCustom";
+
+
+import { DaoStoresRepository } from "../repository/daoStores.repository";
+import { DaoSearchStoreTrackRepository } from "../repository/searchStoreTrack.repository";
 
 export class GetClosestStoreService {
   private readonly defaultTimezone = 'America/Bogota';
+  private daoStoreTrackRepository = new DaoSearchStoreTrackRepository();
 
-  public async main(requestClosestStore: RequestClosestStore): Promise<ResponseClosestStore> {
-    const timezone = requestClosestStore.timezone || this.defaultTimezone;
+  public async main(requestClosestStore: RequestClosestStore, client: Client)
+    : Promise<ResponseClosestStore> {
+    try {
+      const timezone = requestClosestStore.timezone || this.defaultTimezone;
 
-    const { error } = requestClosestStoreSchema.validate(requestClosestStore);
-    if (error) {
-      throw new Error(error.message);
+      const { error } = requestClosestStoreSchema.validate(requestClosestStore);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      const daoStore = new DaoStoresRepository();
+      const store = await daoStore.findClosestOpenStore(requestClosestStore);
+
+      if (!store) {
+        throw new CustomError('No se pudo encontrar una tienda disponible', 404, 'NOT_FOUND');
+      }
+
+      const responseData: ResponseClosestStore = {
+        storeId: store._id,
+        storeName: store.store_name,
+        isOpen: store.isOpenNow,
+        coordinates: store.coordinates.coordinates,
+        nextDeliveryTime: this.getNextDeliveryTime(store, timezone),
+      };
+
+      await this.daoStoreTrackRepository
+        .saveRequestSearchStore(requestClosestStore, responseData, client, undefined)
+
+      return responseData as any as ResponseClosestStore;
+    } catch (error) {
+      await this.daoStoreTrackRepository
+        .saveRequestSearchStore(requestClosestStore, undefined, client, error);
+      throw error;
     }
-
-    const daoStore = new DaoStoresRepository();
-    const store = await daoStore.findClosestOpenStore(requestClosestStore);
-
-    if (!store) {
-      throw new CustomError('No se pudo encontrar una tienda disponible', 404, 'NOT_FOUND');
-    }
-
-    const result: ResponseClosestStore = {
-      storeId: store._id,
-      storeName: store.store_name,
-      isOpen: store.isOpenNow,
-      coordinates: store.coordinates.coordinates,
-      nextDeliveryTime: this.getNextDeliveryTime(store, timezone),
-    };
-
-    return result as any as ResponseClosestStore;
   }
 
   private getNextDeliveryTime(store: Store, timezone: string): string {
