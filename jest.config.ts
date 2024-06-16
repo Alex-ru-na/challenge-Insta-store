@@ -11,4 +11,6 @@ module.exports = {
   testMatch: ['**/*.spec.ts'],
   globals: {
   },
+  detectOpenHandles: true,
+  forceExit: true,
 };

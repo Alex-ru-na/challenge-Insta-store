@@ -2,28 +2,26 @@
 import moment from "moment-timezone";
 
 // Schemas y models
-import { clientSchema } from "../../clients/schemas/client.schema";
+import { requestClosestStoreSchema  } from "../../stores/schemas/store.schema";
 import { Client } from "../../../common/interfaces/client.interfaces";
-import { ResponseClosestStore, Store } from "../models/store.interface";
+import { RequestClosestStore, ResponseClosestStore, Store } from "../models/store.interface";
 
 import { DaoStoresRepository } from "../repository/daoStoresRepository";
 import CustomError from "../../../common/utils/errorCustom"
 
-const DEFAULT_TIME_ZONE = 'America/Bogota';
-
 export class GetClosestStoreService {
-  private timezone!: string;
+  private readonly defaultTimezone = 'America/Bogota';
 
-  public async main(client: Client): Promise<ResponseClosestStore> {
-    this.timezone = client.timezone || DEFAULT_TIME_ZONE;
+  public async main(requestClosestStore: RequestClosestStore): Promise<ResponseClosestStore> {
+    const timezone = requestClosestStore.timezone || this.defaultTimezone;
 
-    const { error } = clientSchema.validate(client);
+    const { error } = requestClosestStoreSchema.validate(requestClosestStore);
     if (error) {
       throw new Error(error.message);
     }
 
     const daoStore = new DaoStoresRepository();
-    const store = await daoStore.findClosestOpenStore(client);
+    const store = await daoStore.findClosestOpenStore(requestClosestStore);
 
     if (!store) {
       throw new CustomError('No se pudo encontrar una tienda disponible', 404, 'NOT_FOUND');
@@ -34,14 +32,14 @@ export class GetClosestStoreService {
       storeName: store.store_name,
       isOpen: store.isOpenNow,
       coordinates: store.coordinates.coordinates,
-      nextDeliveryTime: this.getNextDeliveryTime(store),
+      nextDeliveryTime: this.getNextDeliveryTime(store, timezone),
     };
 
     return result as any as ResponseClosestStore;
   }
 
-  private getNextDeliveryTime(store: Store): string {
-    const now = moment.tz(this.timezone);
+  private getNextDeliveryTime(store: Store, timezone: string): string {
+    const now = moment.tz(timezone);
 
     const nextDeliveryTime = store.delivery_time.find(time => {
       const timeMoment = moment(time, 'HH:mm');

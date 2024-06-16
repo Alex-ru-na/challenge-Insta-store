@@ -1,11 +1,10 @@
 import { DataBase, Collections } from "../../../common/utils/helpers/databaseEnums";
 import MongoConnection from '../../../common/config/configMongoConnection';
-import { StoreAggregate } from "../models/store.interface";
+import { RequestClosestStore, StoreAggregate } from "../models/store.interface";
 import moment from "moment-timezone";
-import { Client } from "../../../common/interfaces/client.interfaces";
-const DEFAULT_TIME_ZONE = 'America/Bogota';
 
 export class DaoStoresRepository {
+  private readonly defaultTimezone = 'America/Bogota';
   private clientMongoConnectionRead = MongoConnection.getInstance().getClientRead();
 
   public async getStores(query: any): Promise<any[]> {
@@ -25,9 +24,9 @@ export class DaoStoresRepository {
     }
   }
 
-  public async findClosestOpenStore(client: Client, limit: number = 1): Promise<StoreAggregate> {
+  public async findClosestOpenStore(requestClosestStore: RequestClosestStore, limit: number = 1): Promise<StoreAggregate> {
     try {
-      const timezone = client.timezone || DEFAULT_TIME_ZONE;
+      const timezone = requestClosestStore.timezone || this.defaultTimezone;
 
       const currentDay = moment().tz(timezone).format('dddd').toLowerCase();
       const currentTime = moment().tz(timezone).format('HH:mm');
@@ -37,7 +36,7 @@ export class DaoStoresRepository {
           $geoNear: {
             near: {
               type: "Point",
-              coordinates: client.location.coordinates
+              coordinates: requestClosestStore.coordinates
             },
             distanceField: "dist.calculated",
             spherical: true

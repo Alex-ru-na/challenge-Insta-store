@@ -98,4 +98,14 @@ export default class Server {
       console.log("[DOC] http://localhost:3000/api-docs/")
     })
   }
+
+  public async close(): Promise<void> {
+    if (this.mongoConnection.clientRead) {
+      await this.mongoConnection.clientRead.close();
+    }
+    if (this.mongoConnection.clientWrite) {
+      await this.mongoConnection.clientWrite.close();
+    }
+    console.log('[Info] MongoDB connections closed.');
+  }
 }

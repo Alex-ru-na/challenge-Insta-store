@@ -1,5 +1,15 @@
 const Joi = require('joi');
 
+const coordinatesSchema = Joi.array().items(
+  Joi.number().min(-90).max(90),
+  Joi.number().min(-180).max(180)
+).length(2);
+
+export const requestClosestStoreSchema = Joi.object({
+  timezone: Joi.string().required(),
+  coordinates: coordinatesSchema.required()
+});
+
 export const storeSchema = Joi.object({
   storeId: Joi.string().required(),
   storeName: Joi.string().required(),

@@ -48,6 +48,10 @@ export interface ResponseClosestStore {
   nextDeliveryTime: string;
 }
 
+export interface RequestClosestStore {
+  timezone: string;
+  coordinates: [number, number];
+}
 
 export interface StoreAggregate extends Store {
   dist: {
