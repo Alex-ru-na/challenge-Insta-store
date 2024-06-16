@@ -100,7 +100,7 @@ RESPONSE: {
 #### Ejemplo Login desde un framework frontend
 ```js
     const credentials = btoa(`${email}:${password}`);
-    const response = await fetch('http://localhost:3001/api/v1/auth/login', {
+    const response = await fetch(`http://localhost:${PORT}/api/v1/auth/login`, {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${credentials}`
@@ -139,6 +139,122 @@ RESPONSE: {
   "nextDeliveryTime": "2024-06-14T15:30:00Z"
 }
 ```
+
+## Estructura de las Colecciones en MongoDB
+Breve resumen de la estructura de la base de datos
+
+### Colección stores
+
+Ejemplo de Documento:
+
+```js
+{
+  "_id": ObjectId("666d4c3f7f9d2943dfc9b876"),
+  "store_id": "1",
+  "store_name": "Tienda A",
+  "coordinates": {
+      "type": "Point",
+      "coordinates": [
+          -99.133209,
+          19.432608
+        ]
+  },
+  "delivery_time": [
+      "09:00",
+      "23:00"
+  ],
+  "openingHours": {
+      "monday": {
+          "open": "08:00",
+          "close": "22:00"
+      },
+      "tuesday": {
+          "open": "08:00",
+          "close": "22:00"
+      }...
+  }
+}
+```
+
+#### Descripción de Campos:
+- _id: Identificador único MongoDB.
+- store_id: Identificador de la tienda.
+- store_name: Nombre de la tienda.
+- coordinates: Coordenadas geográficas de la ubicación de la tienda.
+- type: Tipo de geometría (en este caso, "Point").
+- coordinates: Array de coordenadas longitud y latitud.
+- delivery_time: Horas de entrega disponibles.
+- openingHours: Horario de apertura y cierre por día de la semana (monday a sunday):
+    open: Hora de apertura.
+    close: Hora de cierre.
+
+
+```js
+### Colección clients
+{
+    "_id" : ObjectId("666db388ea88728ce9819b4d"),
+    "email" : "test@gmail.com",
+    "hash" : "$2b$10$H5EaocuVv5Da34qsDpRR1uNIMVaycHbzmUBBiLze7lp2enyBnLEmW",
+    "name" : "Cliente 1",
+    "timezone" : "America/Bogota",
+    "location" : {
+        "iso3_country" : "COL",
+        "city" : "Medellin",
+        "state" : "Antioquia",
+        "coordinates" : [
+            6.244203,
+            -75.581211
+        ]
+    }
+}
+```
+#### Descripción de Campos:
+- _id: Identificador único MongoDB.
+- email: Correo electronico del cliente.
+- hash: Contraseña encriptada del cliente.
+- name: Nombre del cliente.
+- timezone: Zona horaria del cliente.
+- location: Ubicacion del cliente (datos a futuro).
+
+### Colectión search_store_tracks
+```js
+{
+    "_id" : ObjectId("666f191a02366ff43f7b78f5"),
+    "request" : {
+        "timezone" : "America/Bogota",
+        "coordinates" : [
+            40.7128,
+            -74.006
+        ]
+    },
+    "response" : {
+        "storeId" : ObjectId("666d4c3f7f9d2943dfc9b876"),
+        "storeName" : "Tienda A",
+        "isOpen" : true,
+        "coordinates" : [
+            -99.133209,
+            19.432608
+        ],
+        "nextDeliveryTime" : "2024-06-16T23:00:00.000Z"
+    },
+    "client" : {
+        "_id" : "666db388ea88728ce9819b4d",
+        "email" : "test@gmail.com",
+        "timezone" : "America/Bogota",
+        "iat" : 1718547995,
+        "exp" : 1718634395,
+        "token" : "eyJhb..."
+    },
+    "date" : ISODate("2024-06-16T16:55:54.467Z"),
+    "error" : null
+}
+```
+#### Descripción de Campos:
+- _id: Identificador único MongoDB.
+- request: Request completa del endpoint.
+- response: Respueta completa del endpoint.
+- date: Fecha y hora en la que se genero la busqueda.
+- error: Error generando en una busqueda (opcional).
 
 ## Tecnologías Utilizadas 🖥
 - Node.js
