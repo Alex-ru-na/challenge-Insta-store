@@ -2,7 +2,7 @@
 Esta API contiene servicios para autenticación el cual permite a los usuarios iniciar sesión de forma segura utilizando Basic Auth. Tambien permite la busqueda de tiendas cercanas eficientemente mediante el uso de un índice 2dsphere en MongoDB el cual permite busquedas basadas en coordenadas geográficas.
 Adicional se almacena la consultas generadas a la funcionalidad de busqueda para llevar un registro.
 
-### Estructura de Directorios
+## Estructura de Directorios
 ```bash
 /src
   /modules
@@ -56,36 +56,33 @@ Adicional se almacena la consultas generadas a la funcionalidad de busqueda para
     stores.e2e.spec.ts
 ```
 
-### Arquitectura Basada en Módulos
+## Arquitectura Basada en Módulos
 
-#### Estructura de Directorios Organizada por Módulos:
+### Estructura de Directorios Organizada por Módulos:
 
 Directorio principal /src que contiene todos los archivos fuente de tu aplicación.
 Dentro de /src, esta el subdirectorio /modules que contiene los diferentes módulos funcionales de la aplicación (auth, clients, stores).
 
-Ademas el modulo /main donde se encuentra el server.ts que se encarga de inicializar el servido de la aplicación.
-
-#### Separación de Responsabilidades:
+### Separación de Responsabilidades:
 Cada módulo tiene su propia estructura de archivos dedicada:
  -  Models/Interfaces: Define las estructuras de datos y las interfaces que representan los objetos manejados por ese módulo.
- -  Schemas/Repositories: Define los esquemas de validacion de datos y las funciones del repositorio   para        interactuar con la base de datos.
+ -  Schemas/Repositories: Define los esquemas de validación de datos y funciones del repositorio   para        interactuar con la base de datos.
  - Services: Contiene la lógica de negocio específica para el módulo.
  - Routes y Controllers: Define las rutas de API y los controladores que manejan las solicitudes
 
-#### Capa Común (common):
+### Capa Común (common):
 
-Tienes un directorio /common que contiene funcionalidades compartidas entre los diferentes módulos:
-- Config: Configuraciones globales como configuraciones de base de datos y configuración de Swagger.
+El Directorio /common que contiene funcionalidades compartidas entre los diferentes módulos:
+- Config: Configuraciones globales, configuraciones de base de datos y configuración de Swagger.
 - Adapter/Middlewares/Utils: Adaptadores, middlewares globales y utilidades comunes utilizadas en toda la aplicación.
 
-#### Archivo Principal de la Aplicación:
+### Archivo Principal de la Aplicación:
 
 app.ts ubicado en el directorio raíz /src y que se encarga de inicializar y configurar la aplicación de Express.
 
-#### Directorio de Pruebas (Tests):
+### Directorio de Pruebas (Tests):
 /tests
 contiene pruebas de integración (e2e) para los diferentes módulos de tu aplicación (auth, stores).
-
 
 ### Mapa de las funcionalidades:
 Consultar despues de correr el proyecto:  http://localhost:3000/api-docs/
