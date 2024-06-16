@@ -95,7 +95,7 @@ export default class Server {
   public listen(): void {
     this.app.listen(this.port, () => {
       console.log(`[Info] Server running at port: ${this.port}`);
-      console.log("[DOC] http://localhost:3000/api-docs/")
+      console.log(`[DOC] http://localhost:${this.port}/api-docs/`)
     })
   }
 

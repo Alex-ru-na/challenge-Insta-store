@@ -42,13 +42,17 @@ export class GetClosestStoreService {
         nextDeliveryTime: this.getNextDeliveryTime(store, timezone),
       };
 
-      await this.daoStoreTrackRepository
+      this.daoStoreTrackRepository
         .saveRequestSearchStore(requestClosestStore, responseData, client, undefined)
+        .then()
+        .catch(err => err);
 
       return responseData as any as ResponseClosestStore;
     } catch (error) {
-      await this.daoStoreTrackRepository
-        .saveRequestSearchStore(requestClosestStore, undefined, client, error);
+      this.daoStoreTrackRepository
+        .saveRequestSearchStore(requestClosestStore, undefined, client, error)
+        .then()
+        .catch(err => err);
       throw error;
     }
   }

@@ -13,7 +13,7 @@ describe('Login endpoint Test', () => {
   });
 
   afterAll(async () => {
-    await server.close();
+    //await server.close();
   });
 
   it('should return 200 and valid authentication', async () => {

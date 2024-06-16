@@ -13,7 +13,7 @@ describe('Server Integration Tests', () => {
   });
 
   afterAll(async () => {
-    await server.close();
+    // await server.close();
   });
 
   it('should return 200 from root endpoint', async () => {
