@@ -22,7 +22,7 @@ Consultar despues de correr el proyecto:  http://localhost:3000/api-docs/
     npm install
     ```
 
-## Ejecución del Proyecto
+## Ejecución del Proyecto (How to Run)
 
 - Correr compilar el proyecto en /dist:
     ```sh
@@ -275,3 +275,7 @@ Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 
 ## Fecha de estimacion de entrega 🗓
 3 días => 2024-06-17T13:00:00Z
+
+
+## Improvements and Trade-offs
+Detalles sobre mejoras posibles y compromisos considerados, consultar el archivo [improvements_and_tradeoffs.md](./improvements_and_tradeoffs.md).
