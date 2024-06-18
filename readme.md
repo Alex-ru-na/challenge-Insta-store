@@ -204,10 +204,8 @@ POST `http://localhost:${PORT}/api/v1/stores/closest-store`
 }
 BODY:
 {
-  client: {
-    timezone: "America/Bogota",
-    current_coordinates : [40.712776, -74.005974]
-  }
+  timezone: "America/Bogota",
+  current_coordinates : [40.712776, -74.005974]
 }
 
 RESPONSE: {
