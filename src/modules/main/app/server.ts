@@ -15,6 +15,9 @@ import setupSwagger from '../../../common/config/swaggerConfig';
 import storesRoutes from "../../stores/stores.routes";
 import authRoutes from "../../auth/auth.routes";
 
+// sockets config
+import http from 'http';
+import { SocketIOConfig } from '../../../common/config/configSocketConnection';
 
 export default class Server {
   static readonly DEFAULT_PORT = 3001;
@@ -22,6 +25,8 @@ export default class Server {
   public app: Application;
   public mongoConnection!: MongoConnection;
   private port: number;
+  private httpServer!: http.Server;
+
   private apiPath = {
     stores: "/api/v1/stores",
     auth: "/api/v1/auth",
@@ -44,11 +49,17 @@ export default class Server {
     try {
       this.mongoConnection = MongoConnection.getInstance();
       await this.listenStatusConnection();
+      this.startSocket();
       return this
     } catch (error) {
       const _error = error as Error
       throw new Error(`[Error] In Server init; Error: ${_error}`);
     }
+  }
+
+  private startSocket(): void {
+    this.httpServer = http.createServer(this.app); // Create an HTTP server with the Express app
+    SocketIOConfig.getInstance(this.httpServer); // Initialize Socket.IO
   }
 
   public getApp(): Application {
@@ -93,10 +104,15 @@ export default class Server {
   }
 
   public listen(): void {
-    this.app.listen(this.port, () => {
+    /*this.app.listen(this.port, () => {
       console.log(`[Info] Server running at port: ${this.port}`);
       console.log(`[DOC] http://localhost:${this.port}/api-docs/`)
     })
+    */
+    this.httpServer.listen(this.port, () => {
+      console.log(`[Info] Server running at port: ${this.port}`);
+      console.log(`[DOC] http://localhost:${this.port}/api-docs/`);
+    });
   }
 
   public async close(): Promise<void> {

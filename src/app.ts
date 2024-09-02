@@ -9,10 +9,7 @@ dotenv.config({ silent: true });
 let workers = os.cpus().length;
 
 if (cluster.isMaster) {
-  if (process.env.ENVIRONMENT !== Environments.PRODUCTION) {
-    workers = 1
-  }
-  workers = 1; // for develop just one node
+  workers = 2;
 
   console.log('[Info] Start cluster with %s workers', workers);
 

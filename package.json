@@ -1,5 +1,5 @@
 {
-  "name": "challenge-insta-store",
+  "name": "challenge-store",
   "version": "1.0.0",
   "description": "",
   "main": "dist/app.js",
@@ -37,6 +37,7 @@
     "mongodb": "^6.1.0",
     "morgan": "^1.10.0",
     "rxjs": "^7.8.1",
+    "socket.io": "^4.7.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
